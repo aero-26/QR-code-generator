@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="bg-gray-950 text-white flex flex-col items-center">
+    <div class="text-center flex flex-col items-center">
+      <h4 class="text-4xl my-6">Create QR Code Live</h4>
+      <input type="text" class="h-12 text-black p-2 rounded-md w-[90%]" />
+      <div class="flex my-4 justify-evenly w-[90%]">
+        <button class="bg-red-600 rounded-md p-4 px-8 text-2xl">➜</button>
+        <button
+          class="bg-blue-600 rounded-md p-4 text-2xl hidden"
+          id="download"
+        >
+          Download
+        </button>
+      </div>
+      <img
+        src=""
+        alt="qr code image"
+        id="qr-img"
+        class="hidden p-4 bg-white rounded-md"
+      />
+    </div>
+
+    <script>
+      const input = document.querySelector("input");
+      const img = document.querySelector("img");
+      const btn = document.querySelector("button");
+      const download = document.querySelector("#download");
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          viewImg();
+        }
+      });
+
+      btn.addEventListener("click", () => {
+        viewImg();
+      });
+
+      download.addEventListener("click", () => {
+        const a = document.createElement("a");
+        a.classList.add("hidden");
+        a.setAttribute("download", `${input.value}.img`);
+        a.setAttribute(
+          "href",
+          `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${textBoxInput}`
+        );
+        a.click();
+      });
+
+      function viewImg() {
+        const textBoxInput = input.value;
+        if (textBoxInput !== "") {
+          img.classList.remove("hidden");
+          img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${textBoxInput}`;
+          download.classList.remove("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>
